@@ -2,19 +2,6 @@ version: 0.0
 os: linux
 
 hooks:
-  BeforeInstall:
-    - location: /dev/null
-      timeout: 300
-      runas: root
-      script: |
-        if ! command -v docker &> /dev/null
-        then
-            echo "Docker not found. Installing Docker..."
-            sudo yum update -y
-            sudo amazon-linux-extras install docker -y
-            sudo service docker start
-            sudo usermod -a -G docker ec2-user
-        fi
 
   AfterInstall:
     - location: /dev/null
