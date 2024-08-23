@@ -1,0 +1,34 @@
+version: 0.0
+os: linux
+
+hooks:
+  BeforeInstall:
+    - location: /dev/null
+      timeout: 300
+      runas: root
+      script: |
+        if ! command -v docker &> /dev/null
+        then
+            echo "Docker not found. Installing Docker..."
+            sudo yum update -y
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+        fi
+
+  AfterInstall:
+    - location: /dev/null
+      timeout: 300
+      runas: root
+      script: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 590183786246.dkr.ecr.us-east-1.amazonaws.com
+        docker pull 590183786246.dkr.ecr.us-east-1.amazonaws.com/php-app:latest
+
+  ApplicationStart:
+    - location: /dev/null
+      timeout: 300
+      runas: root
+      script: |
+        docker stop my-container || true
+        docker rm my-container || true
+        docker run -d --name my-container -p 82:80 590183786246.dkr.ecr.us-east-1.amazonaws.com/php-app:latest
