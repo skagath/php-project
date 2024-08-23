@@ -4,3 +4,7 @@ RUN apk update; \
     apk upgrade;
 
 RUN docker-php-ext-install mysqli
+
+COPY ../public /var/www/html/
+
+EXPOSE 80
