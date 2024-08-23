@@ -1,8 +1,8 @@
 <?php
-define('DB_SERVER', 'mysql');
-define('DB_USERNAME', 'user1');
-define('DB_PASSWORD', 'passwd');
-define('DB_NAME', 'mydb');
+define('DB_SERVER', 'mydb.c9mci02ckobw.us-east-1.rds.amazonaws.com');
+define('DB_USERNAME', 'admin');
+define('DB_PASSWORD', '12345678');
+define('DB_NAME', 'php_demo');
  
 // Attempt to connect to mysql database 
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

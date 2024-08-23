@@ -7,7 +7,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 590183786246.dkr.ecr.us-east-1.amazonaws.com
       - REPOSITORY_URI=590183786246.dkr.ecr.us-east-1.amazonaws.com/php-app
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=latest
       - echo $IMAGE_TAG
 
   build:
@@ -19,6 +19,7 @@ phases:
   post_build:
     commands:
       - echo Pushing the Docker image...
+      - docker image ls 
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - printf '[{"name":"php-app","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
