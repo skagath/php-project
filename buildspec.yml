@@ -5,14 +5,14 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 590183786246.dkr.ecr.us-east-1.amazonaws.com
-      - REPOSITORY_URI=90183786246.dkr.ecr.us-east-1.amazonaws.com/php-app
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 438465160558.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=438465160558.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo
       - echo $REPOSITORY_URI
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t sample-node-app .
+      - docker build -t my-ecr-repo .
       - docker tag sample-node-app:latest $REPOSITORY_URI:latest
   post_build:
     commands:
